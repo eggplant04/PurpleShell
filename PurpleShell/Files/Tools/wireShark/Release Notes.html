@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.18">
+<title>Wireshark 4.4.0 Release Notes</title>
+<link rel="stylesheet" href="./ws.css">
+</head>
+<body class="article">
+<div id="header">
+<h1>Wireshark 4.4.0 Release Notes</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>This is the first release of the 4.4 branch.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_what_is_wireshark">What is Wireshark?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Wireshark is the world’s most popular network protocol analyzer.
+It is used for troubleshooting, analysis, development and education.</p>
+</div>
+<div class="paragraph">
+<p>Wireshark is hosted by the Wireshark Foundation, a nonprofit which promotes protocol analysis education.
+Wireshark and the foundation depend on your contributions in order to do their work.
+If you or your organization would like to contribute or become a sponsor, please visit <a href="https://wiresharkfoundation.org">wiresharkfoundation.org</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_whats_new">What’s New</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Many improvements and fixes to the graphing dialogs, including
+I/O Graphs, Flow Graph / VoIP Calls, and TCP Stream Graphs.</p>
+</div>
+<div class="paragraph">
+<p>Wireshark now supports automatic profile switching.
+You can associate a display filter with a configuration profile, and when you open a capture file that matches the filter, Wireshark will automatically switch to that profile.</p>
+</div>
+<div class="paragraph">
+<p>Support for Lua 5.3 and 5.4 has been added, and support for Lua 5.1 and 5.2 has been removed.
+The Windows and macOS installers now ship with Lua 5.4.6.</p>
+</div>
+<div class="paragraph">
+<p>Improved display filter support for value strings (optional string representations for numeric fields).</p>
+</div>
+<div class="paragraph">
+<p>Display filter functions can be implemented as plugins, similar to protocol dissectors and file parsers.</p>
+</div>
+<div class="paragraph">
+<p>Display filters can be translated to pcap filters using <span class="menuseq"><b class="menu">Edit</b>&#160;<b class="caret">&#8250;</b> <b class="submenu">Copy</b>&#160;<b class="caret">&#8250;</b> <b class="menuitem">Display filter as pcap filter</b></span> if each display filter field has a corresponding pcap filter equivalent.</p>
+</div>
+<div class="paragraph">
+<p>Custom columns can be defined using any valid field expression, such as
+display filter functions, packet slices, arithmetic calculations, logical tests,
+raw byte addressing, and protocol layer modifiers.</p>
+</div>
+<div class="paragraph">
+<p>Custom output fields for <code>tshark -e</code> can also be defined using any
+valid field expression.</p>
+</div>
+<div class="paragraph">
+<p>Wireshark can be built with the zlib-ng instead of zlib for compressed file support.
+Zlib-ng is substantially faster than zlib.
+The official Windows and macOS packages include this feature.</p>
+</div>
+<div class="paragraph">
+<p>Many other improvements have been made.
+See the “New and Updated Features” section below for more details.</p>
+</div>
+<div class="sect2">
+<h3 id="_new_and_updated_features">New and Updated Features</h3>
+<div class="paragraph">
+<p>The following features are either new or have been significantly updated since version 4.2.0:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The Windows installers now ship with Npcap 1.79.
+They previously shipped with Npcap 1.78.</p>
+</li>
+</ul>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Improvements to the "I/O Graphs" dialog:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>A number of crasher bugs have been fixed.</p>
+</li>
+<li>
+<p>The protocol tree context menu can open a I/O graph of the currently
+selected field. <a href="https://gitlab.com/wireshark/wireshark/-/issues/11362">Issue 11362</a></p>
+</li>
+<li>
+<p>Smaller intervals can be used, down to 1 microsecond. <a href="https://gitlab.com/wireshark/wireshark/-/issues/13682">Issue 13682</a></p>
+</li>
+<li>
+<p>A larger number of I/O Graph item buckets can be used, up to 2<sup>25</sup> (33 million)
+items. <a href="https://gitlab.com/wireshark/wireshark/-/issues/8460">Issue 8460</a></p>
+</li>
+<li>
+<p>The size of individual graph items has been reduced, which reduces memory utilization.</p>
+</li>
+<li>
+<p>When the Y field or Y axis changes, the graph displays the new graph
+correctly, retapping if necessary, instead of displaying information
+based on stale data.</p>
+</li>
+<li>
+<p>The graph is smarter about choosing whether to retap (expensive),
+recalculate (moderately intensive), or replot (cheap) in order to
+display the newly chosen options correctly with the least amount of
+calculations. For instance, a graph that has previously been
+plotted and is disabled and then reenabled without any other changes
+will not require a new retap. <a href="https://gitlab.com/wireshark/wireshark/-/issues/15822">Issue 15822</a></p>
+</li>
+<li>
+<p>LOAD graphs are graphed properly again. <a href="https://gitlab.com/wireshark/wireshark/-/issues/18450">Issue 18450</a></p>
+</li>
+<li>
+<p>Y axes have human readable units with SI prefixes.
+<a href="https://gitlab.com/wireshark/wireshark/-/issues/12827">Issue 12827</a></p>
+</li>
+<li>
+<p>Bar widths are scaled to the size of the interval.</p>
+</li>
+<li>
+<p>Bar border colors are a slightly darker color than that
+of the graph itself, instead of always black. <a href="https://gitlab.com/wireshark/wireshark/-/issues/17422">Issue 17422</a></p>
+</li>
+<li>
+<p>Time values have the correct width when axes are automatically reset.</p>
+</li>
+<li>
+<p>The precision of the interval time shown in the hint message depends
+on the interval.</p>
+</li>
+<li>
+<p>The tracer follows the currently selected row on the table of graphs,
+and does not appear on an invisible graph.</p>
+</li>
+<li>
+<p>The tracer moves to the frame selected in the main window.
+<a href="https://gitlab.com/wireshark/wireshark/-/issues/12909">Issue 12909</a></p>
+</li>
+<li>
+<p>Pending graph changes are saved when changing profiles when the
+I/O Graphs dialog is open.</p>
+</li>
+<li>
+<p>I/O Graph dialog windows for closed capture files are no longer affected
+by changing the list of graphs (either in that dialogs or in other dialogs
+for the currently open file.)</p>
+</li>
+<li>
+<p>Newly created temporary graphs, which will not be saved
+unless the configuration has changed, are more clearly marked with
+italics.</p>
+</li>
+<li>
+<p>When "Time of Day" is selected for a graph, the absolute time will be
+saved to CSV exports instead of the relative time. <a href="https://gitlab.com/wireshark/wireshark/-/issues/13717">Issue 13717</a></p>
+</li>
+<li>
+<p>Graphs can be reordered by dragging and dropping their list entries. <a href="https://gitlab.com/wireshark/wireshark/-/issues/13855">Issue 13855</a></p>
+</li>
+<li>
+<p>The graph layer order and legend order always matches the
+order in the graph list. Legends also appear properly. <a href="https://gitlab.com/wireshark/wireshark/-/issues/13854">Issue 13854</a></p>
+</li>
+<li>
+<p>The legend can be moved to other corners of the graph by right-clicking
+on it and selecting its new location from a menu.</p>
+</li>
+<li>
+<p>For purposes of displaying zero values, graphs with both lines and data point symbols are treated as line graphs, not scatter plots.</p>
+</li>
+<li>
+<p>Logarithmic ticks are used when the Y axis is logarithmic.</p>
+</li>
+<li>
+<p>The graph crosshairs context menu option works.</p>
+</li>
+<li>
+<p>You can resize the graph list columns to their contents by right clicking on the list header.
+<a href="https://gitlab.com/wireshark/wireshark/-/issues/18102">Issue 18102</a></p>
+</li>
+<li>
+<p>The graph is more responsive to mouse movement, especially on Linux Wayland.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Improvements to the Sequence Diagram (Flow Graphs and VoIP Calls):</p>
+<div class="ulist">
+<ul>
+<li>
+<p>When exporting the graph as an image, the entire graph is shown
+with up to 1000 items instead of only what was visible on-screen.
+This value can be increased in the preferences. <a href="https://gitlab.com/wireshark/wireshark/-/issues/13504">Issue 13504</a></p>
+</li>
+<li>
+<p>Endpoints that share the same address now have two distinct nodes
+with a line between them. <a href="https://gitlab.com/wireshark/wireshark/-/issues/12038">Issue 12038</a></p>
+</li>
+<li>
+<p>The "Comment" column can be resized by selecting the axis between the
+"Comment" column and the graph and dragging, and auto-resized by
+double-clicking the column. <a href="https://gitlab.com/wireshark/wireshark/-/issues/4972">Issue 4972</a></p>
+</li>
+<li>
+<p>Tooltips are shown for elided comments.</p>
+</li>
+<li>
+<p>The scroll direction via keyboard is no longer reversed. <a href="https://gitlab.com/wireshark/wireshark/-/issues/12932">Issue 12932</a></p>
+</li>
+<li>
+<p>The column widths are fixed instead of resizing slightly depending
+on the visible entries. <a href="https://gitlab.com/wireshark/wireshark/-/issues/12931">Issue 12931</a></p>
+</li>
+<li>
+<p>The Y axis labels stay in the correct position without having to
+click the <b class="button">Reset</b> button.</p>
+</li>
+<li>
+<p>The progress bar appears correctly in the Flow Graph (non VoIP Calls).</p>
+</li>
+<li>
+<p>The behavior of the "Any" and "Network" combobox is corrected.
+<a href="https://gitlab.com/wireshark/wireshark/-/issues/19818">Issue 19818</a></p>
+</li>
+<li>
+<p>"Limit to Display Filter" is checked if a display filter is applied
+when the Flow Graph is opened, per the documentation.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>TCP Stream Graphs:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>A better decision is made about which side is the server and thus
+the initially chosen direction in the graph.</p>
+</li>
+<li>
+<p>The "Window Scaling" graph axis labels are corrected and show both graphs.</p>
+</li>
+<li>
+<p>The graph crosshairs context menu option works.</p>
+</li>
+<li>
+<p>Switching between relative and absolute sequence numbers works again.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>The "Follow Stream" dialog can now show delta times between turns and all packets and events.</p>
+</li>
+<li>
+<p>A number of graphs using the QCustomPlot widget ("I/O Graphs", "Flow Graph",
+"TCP Stream Graphs", and "RTP Player") are more responsive to mouse
+movement, especially on Linux when Wayland is used.</p>
+</li>
+<li>
+<p>The "Find Packet" dialog can search backwards and find additional occurrences
+of a string, hex value, or regular expression in a single frame.</p>
+</li>
+<li>
+<p>When using "Go To Packet" with an undisplayed frame, the window goes to
+nearest displayed frame by number. <a href="https://gitlab.com/wireshark/wireshark/-/issues/2988">Issue 2988</a></p>
+</li>
+<li>
+<p>Display filter syntax enhancements:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Better handling of comparisons with value strings. Now the display filter engine can
+correctly handle cases where multiple different numeric values map to the same value
+string, including but not limited to range-type value strings.</p>
+</li>
+<li>
+<p>Fields with value strings now support regular expression matching.</p>
+</li>
+<li>
+<p>Date and time values now support arithmetic, with some restrictions:
+the multiplier/divisor must be an integer or floating point number and appear on the right-hand
+side of the operator.</p>
+</li>
+<li>
+<p>The keyword "bitand" can be used as an alternative syntax for the bitwise-and operator.</p>
+</li>
+<li>
+<p>Functions alone can now be used as an entire logical expression.
+The result of the expression is the truthiness of the function return
+value (or of all values if more than one). This is useful for example to write
+"len(something)" instead of "len(something) != 0". Even more so if a function
+returns itself a boolean value, it is now possible to write
+"bool_test(some.field)" instead of having to write "bool_test(some.field) == True".
+Both forms are now valid.</p>
+</li>
+<li>
+<p>Display filter references can be written without curly braces. It
+is now possible to write <code>$frame.number</code> instead of <code>${frame.number}</code> for example.</p>
+</li>
+<li>
+<p>There are new display filter functions which test various IP address properties.
+Check the
+<a href="https://www.wireshark.org/docs/man-pages/wireshark-filter.html">wireshark-filter</a>(5)
+man page for more information.</p>
+</li>
+<li>
+<p>There are new display filter functions which convert unsigned integer types to
+decimal or hexadecimal, and convert fields with value strings into the
+associated string for their value, which can be used to produce results similar to
+custom columns. Check the
+<a href="https://www.wireshark.org/docs/man-pages/wireshark-filter.html">wireshark-filter</a>(5)
+man page for more information.</p>
+</li>
+<li>
+<p>Display filter macros can be written with a semicolon after the macro
+name before the argument list, e.g. <code>${mymacro;arg1;&#8230;&#8203;;argN}</code>, instead
+of <code>${mymacro:arg1;&#8230;&#8203;;argN}</code>. The version with semicolons works better
+with pop-up suggestions when editing the display filter, so the version
+with the colon might be removed in the future.</p>
+</li>
+<li>
+<p>Display filter macros can be written using a function-like notation.
+The macro <code>${mymacro:arg1;&#8230;&#8203;;argN}</code> can be written
+<code>$mymacro(arg1,&#8230;&#8203;,argN)</code>.</p>
+</li>
+<li>
+<p>AX.25 addresses are now filtered using the "CALLSIGN-SSID" string syntax.
+Filtering based on the raw bytes values is still possible, like other
+field types, with the <code>@</code> operator.  <a href="https://gitlab.com/wireshark/wireshark/-/issues/17973">Issue 17973</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Display filter functions can be implemented as libwireshark plugins. Plugins are loaded
+during startup from the usual binary plugin configuration directories. See the
+<code>ipaddr.c</code> source file in the distribution for an example of a display filter C plugin
+and the doc/plugins.example folder for generic instructions how to build a plugin.</p>
+</li>
+<li>
+<p>Display filter autocompletions now also include display filter functions.</p>
+</li>
+<li>
+<p>The display filter macro configuration file has changed format. It now uses
+the same format as the "dfilters" file and has been renamed accordingly to
+"dmacros". Internally it no longer uses the UAT API and the display filter macro
+GUI dialog has been updated. There is some basic migration logic implemented
+but it is advisable to check that the "dfilter_macros" (old) and
+"dmacros" (new) files in the profile directory are consistent.</p>
+</li>
+<li>
+<p>Custom columns can be defined using any valid field expression:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Display filter functions, like <code>len(tcp.payload)</code>, including nested functions
+like <code>min(len(tcp.payload), len(udp.payload))</code> and newly defined functions
+using the plugin system mentioned above. <a href="https://gitlab.com/wireshark/wireshark/-/issues/15990">Issue 15990</a> <a href="https://gitlab.com/wireshark/wireshark/-/issues/16181">Issue 16181</a></p>
+</li>
+<li>
+<p>Arithmetic calculations, like <code>ip.len * 8</code> or <code>tcp.srcport + tcp.dstport</code>.
+<a href="https://gitlab.com/wireshark/wireshark/-/issues/7752">Issue 7752</a></p>
+</li>
+<li>
+<p>Slices, like <code>tcp.payload[4:4]</code>. <a href="https://gitlab.com/wireshark/wireshark/-/issues/10154">Issue 10154</a></p>
+</li>
+<li>
+<p>The layer operator, like <code>ip.proto#1</code>, which will return the protocol field in the
+first IPv4 layer if there is tunneling. <a href="https://gitlab.com/wireshark/wireshark/-/issues/18588">Issue 18588</a></p>
+</li>
+<li>
+<p>Raw byte addressing, like <code>@ip</code>, which will return the bytes of protocol
+or FT_NONE fields, among others. <a href="https://gitlab.com/wireshark/wireshark/-/issues/19076">Issue 19076</a></p>
+</li>
+<li>
+<p>Logical tests, like <code>tcp.port == 443</code>, which produce a check mark if
+the test matches (similar to protocol and FT_NONE fields without <code>@</code>.)
+This works with all logical operators, including e.g. regular expression
+matching (<code>matches</code> or <code>~</code>.)</p>
+</li>
+<li>
+<p>Defined display filter macros.</p>
+</li>
+<li>
+<p>Any combination of the above also works.</p>
+</li>
+<li>
+<p>Multifield columns are still available. For backwards compatibility,
+<code>X or Y</code> is interpreted as a multifield column as before. To represent a
+logical test for the presence of multiple fields instead of concatenating
+values, use parenthesis, e.g. <code>(tcp.options.timestamp or tcp.options.nop)</code>.</p>
+</li>
+<li>
+<p>Field references are not implemented because there&#8217;s no sense of a
+currently selected frame. "Resolved" column values (such as host name
+resolution or value string lookup) are not supported for any of the new
+expressions yet.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Custom output fields for <code>tshark -e &lt;field&gt;</code> can also be defined using any
+valid field expression as above.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>For custom output fields, <code>X or Y</code> is the usual logical test; to output
+multiple fields use multiple <code>-e</code> terms as before.</p>
+</li>
+<li>
+<p>The various <code>-E</code> options, including <code>-E occurrence</code>, all work as expected.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>When selecting "Manage Interfaces" from "Capture Options", Wireshark only
+attempts to reconnect to rpcap hosts that were active in the
+last session, instead of every remote host that the current profile has ever
+connected to. <a href="https://gitlab.com/wireshark/wireshark/-/issues/17484">Issue 17484</a></p>
+</li>
+<li>
+<p>The "Resolved Addresses" dialog only shows what addresses and ports are
+present in the file (not including information from static files), and
+selected rows or the entire table can be saved or copied to the clipboard
+in several formats. <a href="https://gitlab.com/wireshark/wireshark/-/issues/16419">Issue 16419</a></p>
+</li>
+<li>
+<p>Dumpcap and Wireshark support the <code>-F</code> option when capturing a file
+on the command line. <a href="https://gitlab.com/wireshark/wireshark/-/issues/18009">Issue 18009</a></p>
+</li>
+<li>
+<p>When capturing on the command line dumpcap accepts a <code>-Q</code> option that is
+quieter than <code>-q</code> and prints only errors to standard error, similar to tshark.
+<a href="https://gitlab.com/wireshark/wireshark/-/issues/14491">Issue 14491</a></p>
+</li>
+<li>
+<p>When capturing a file and requesting the <code>pcap</code> format, nanosecond resolution
+time stamps will be written if the device and version of libpcap supports it.</p>
+</li>
+<li>
+<p>When capturing using a file size autostop or ring buffer condition,
+the maximum value is now 2 TB, up from 2GiB. Note that you may
+have problems when the number of packets gets larger than 2<sup>31</sup> or 2<sup>32</sup>,
+though that is also true when no limit is set.</p>
+</li>
+<li>
+<p>When capturing files in multiple file mode, a pattern that places the date and time
+before the index number can be used (e.g., foo_20240714110102_00001.pcap instead of
+foo_00001_20240714110102.pcap). This makes file names sortable in chronological order
+across file sets from different captures. The "File Set" dialog has been updated to
+handle the new pattern, which has been capable of being produced by tshark since
+version 3.6.0.</p>
+</li>
+<li>
+<p>Adding interfaces at startup is about twice as fast, and has many fewer
+UAC pop-ups when Npcap is installed with access restricted to Administrators
+on Windows.</p>
+</li>
+<li>
+<p>The Lua version included with the Windows and macOS installers has been updated to 5.4.
+While we have tried to help with backward compatibility by including lua_bitop library with
+Lua 5.3 and 5.4 in addition to the native Lua support for bit operations
+present in those versions, different versions of Lua are not guaranteed to
+be compatible. If a Lua dissector has issues, check the manuals for
+<a href="https://www.lua.org/manual/5.4/manual.html#8">Lua 5.4</a>,
+<a href="https://www.lua.org/manual/5.3/manual.html#8">Lua 5.3</a>, and
+<a href="https://www.lua.org/manual/5.2/manual.html#8">Lua 5.2</a> for
+incompatibilities and suggested workarounds. Note that features marked as
+deprecated in one version are removed in the subsequent version without
+additional notice, so it can be worth checking the manual for previous versions.</p>
+</li>
+<li>
+<p>Lua scripts in the plugins directories are now initially loaded via the same
+internal Lua methods as <code>require()</code>. This avoids errors from loading plugins
+twice, once by scanning the directory initially, and once by <code>require()</code>,
+and also results in globals defined in plugins entering the global namespace.
+Previously globals defined in plugins only entered the global namespace when
+placed in the global plugins directory, but not the personal plugins directory.
+Using globals in plugins remains deprecated style (both by Wireshark and in Lua
+generally), that should be avoided via using other methods. <a href="https://gitlab.com/wireshark/wireshark/-/issues/18589">Issue 18589</a></p>
+</li>
+<li>
+<p>Lua functions have been added to decompress and decode TvbRanges with other
+compression types besides zlib, such as Brotli, Snappy, Zstd, and others,
+matching the support in the C API. tvbrange:uncompress() has been deprecated
+in favor of tvbrange:uncompress_zlib().</p>
+</li>
+<li>
+<p>Lua Dumper now defaults to the pcapng file type, and to per-packet
+encapsulation (creating interfaces on demand as necessary) when writing
+pcapng <a href="https://gitlab.com/wireshark/wireshark/-/issues/16403">Issue 16403</a></p>
+</li>
+<li>
+<p>Editcap has an <code>--extract-secrets</code> option to extract embedded decryption
+secrets from a capture file. <a href="https://gitlab.com/wireshark/wireshark/-/issues/18197">Issue 18197</a></p>
+</li>
+<li>
+<p>Global profiles can be used in tshark by using <code>--global-profile</code> option.</p>
+</li>
+<li>
+<p>Capture files can be saved with LZ4 compression. LZ4 has an emphasis on
+speed and may be particularly useful for large files.</p>
+</li>
+<li>
+<p>Fast random access is supported with LZ4 compressed files when compressed
+with independent blocks, which is the default. This provides much more
+responsive GUI performance when jumping to different packets. Fast random
+access has been supported with gzip compressed files since version 1.8.0,
+but this is not supported for Zstd compressed files.</p>
+</li>
+<li>
+<p>Mergecap, Editcap, TShark and Text2pcap have an <code>--compress</code> option to
+compress output to different formats. For now, it supports the gzip
+and LZ4 compression formats. When the option is not given, the desired
+compression format can also be deduced from the output filename
+extension, e.g. gzip for .gz.</p>
+</li>
+<li>
+<p>Wireshark&#8217;s Git repostory tags are now signed using SSH.
+See
+<a href="https://www.wireshark.org/docs/wsdg_html_chunked/ChSrcGitRepository.html#ChSrcWebInterface">the Developer&#8217;s Guide</a>
+for more details.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_removed_features_and_support">Removed Features and Support</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>The tshark <code>-G</code> option with no argument is deprecated and will be removed in
+a future version. Use <code>tshark -G fields</code> to produce the same report.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_removed_dissectors">Removed Dissectors</h3>
+<div class="paragraph">
+<p>The Parlay dissector has been removed.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_new_protocol_support">New Protocol Support</h3>
+<div class="paragraph">
+<p>Allied Telesis Resiliency Link (AT RL), ATN Security Label, Bit Index Explicit Replication (BIER), Bus Mirroring Protocol, EGNOS Message Server (EMS) file format, Galileo E1-B I/NAV navigation messages, IBM i RDMA Endpoint (iRDMA-EDP), IWBEMSERVICES, MAC NR Framed (mac-nr-framed), Matter Bluetooth Transport Protocol (MatterBTP), MiWi P2P Star, Monero, NMEA 0183, PLDM, RDP authentication redirection virtual channel protocol (rdpear), RF4CE Network Layer (RF4CE), RF4CE Profile (RF4CE Profile), RK512, SAP Remote Function Call (SAPRFC), SBAS L1 Navigation Message, Scanner Access Now Easy (SANE), TREL, WMIO, and ZeroMQ Message Transport Protocol (ZMTP)</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updated_protocol_support">Updated Protocol Support</h3>
+<div class="paragraph">
+<p>IPv6: The "show address detail" preference is now enabled by default. The
+address details provided have been extended to include more special purpose address
+block properties (forwardable, globally-routable, etc).</p>
+</div>
+<div class="paragraph">
+<p>Too many other protocol updates have been made to list them all here.</p>
+</div>
+<div class="paragraph">
+<p>EGNOS Messager Server (EMS) files</p>
+</div>
+<div class="paragraph">
+<p>u-blox GNSS receivers</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_major_api_changes">Major API Changes</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>The entire code base has been updated to use C99 types instead of GLib types.
+This includes changing occurrences <code>gboolean</code>, which is an integer, to C99&#8217;s native <code>bool</code> type in many places.
+See <a href="https://gitlab.com/wireshark/wireshark/-/issues/19116">issue 19116</a> for more details.</p>
+</li>
+<li>
+<p>The <code>tvb_get_guintX</code> and <code>tvb_get_gintX</code> functions in the tvbuff API have been renamed to <code>tvb_get_uintX</code> and <code>tvb_get_intX</code> (the GLib-style "g" has been removed).
+You can still use the old-style names, but they have been deprecated.</p>
+</li>
+<li>
+<p>Plugins should provide a <code>plugin_describe()</code> function that returns an ORed
+list of flags consisting of the plugin types used.
+See <em>wsutil/plugins.h</em> for details.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_getting_wireshark">Getting Wireshark</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Wireshark source code and installation packages are available from
+<a href="https://www.wireshark.org/download.html" class="bare">https://www.wireshark.org/download.html</a>.</p>
+</div>
+<div class="sect2">
+<h3 id="_vendor_supplied_packages">Vendor-supplied Packages</h3>
+<div class="paragraph">
+<p>Most Linux and Unix vendors supply their own Wireshark packages.
+You can usually install or upgrade Wireshark using the package management system specific to that platform.
+A list of third-party packages can be found on the
+<a href="https://www.wireshark.org/download.html">download page</a>
+on the Wireshark web site.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_file_locations">File Locations</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Wireshark and TShark look in several different locations for preference files, plugins, SNMP MIBS, and RADIUS dictionaries.
+These locations vary from platform to platform.
+You can use <span class="menuseq"><b class="menu">Help</b>&#160;<b class="caret">&#8250;</b> <b class="submenu">About Wireshark</b>&#160;<b class="caret">&#8250;</b> <b class="menuitem">Folders</b></span> or <code>tshark -G folders</code> to find the default locations on your system.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_getting_help">Getting Help</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The User’s Guide, manual pages and various other documentation can be found at
+<a href="https://www.wireshark.org/docs/" class="bare">https://www.wireshark.org/docs/</a></p>
+</div>
+<div class="paragraph">
+<p>Community support is available on
+<a href="https://ask.wireshark.org/">Wireshark’s Q&amp;A site</a>
+and on the wireshark-users mailing list.
+Subscription information and archives for all of Wireshark’s mailing lists can be found on <a href="https://lists.wireshark.org/lists/">the mailing list site</a>.</p>
+</div>
+<div class="paragraph">
+<p>Bugs and feature requests can be reported on
+<a href="https://gitlab.com/wireshark/wireshark/-/issues">the issue tracker</a>.</p>
+</div>
+<div class="paragraph">
+<p>You can learn protocol analysis and meet Wireshark’s developers at
+<a href="https://sharkfest.wireshark.org">SharkFest</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_you_can_help">How You Can Help</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The Wireshark Foundation helps as many people as possible understand their networks as much as possible.
+You can find out more and donate at <a href="https://wiresharkfoundation.org">wiresharkfoundation.org</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_frequently_asked_questions">Frequently Asked Questions</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A complete FAQ is available on the
+<a href="https://www.wireshark.org/faq.html">Wireshark web site</a>.</p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
